@@ -1,0 +1,15 @@
+precision mediump float;
+precision mediump int;
+
+attribute vec3 aPosition;
+attribute vec2 aTexCoords;
+
+uniform mat4 uPVM;
+
+varying vec2 vTexCoords;
+
+void main() 
+{
+    vTexCoords = aTexCoords;
+    gl_Position = uPVM * vec4(aPosition, 1.0);
+}

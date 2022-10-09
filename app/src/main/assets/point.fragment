@@ -1,0 +1,18 @@
+precision mediump float;
+precision mediump int;
+
+varying vec2 vTexCoords;
+
+uniform vec3 uColor;
+
+void main()
+{
+    float dist = distance(vTexCoords, vec2(0.5,0.5));
+    float transparency = 0.0;
+    if(dist < 0.5)
+        transparency = 1.0;
+    else
+        transparency = 0.0;
+    
+    gl_FragColor = vec4(uColor, transparency);
+}
