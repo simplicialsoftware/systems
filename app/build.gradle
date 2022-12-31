@@ -1,5 +1,9 @@
-plugins {
-    id 'com.android.application'
+apply plugin: 'com.android.application'
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
 }
 
 android {

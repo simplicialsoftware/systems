@@ -1,13 +1,17 @@
 package simplicial.software.views;
 
+import static android.content.Context.WINDOW_SERVICE;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -98,8 +102,14 @@ public class SimulationView extends GLSurfaceView implements Renderer {
 
         setRenderMode(RENDERMODE_CONTINUOUSLY);
 
-        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getSize(windowSize);
+        WindowManager windowManager = (WindowManager) getContext().getSystemService(WINDOW_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Rect bounds = windowManager.getCurrentWindowMetrics().getBounds();
+            windowSize.x = bounds.width();
+            windowSize.y = bounds.height();
+        } else {
+            getWindowSize(windowManager, windowSize);
+        }
 
         GLES20.glGenBuffers(trailVBOs.length, trailVBOs, 0);
         for (int i = 0; i < trailVBOs.length; i++) {
@@ -114,6 +124,11 @@ public class SimulationView extends GLSurfaceView implements Renderer {
                 Particle.PARTICLE_VERTEX_BUFFER, GLES20.GL_DYNAMIC_DRAW);
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+    }
+
+    @SuppressWarnings({"deprecation", "RedundantSuppression"})
+    private static void getWindowSize(WindowManager windowManager, Point windowSize) {
+        windowManager.getDefaultDisplay().getSize(windowSize);
     }
 
     public void init() {

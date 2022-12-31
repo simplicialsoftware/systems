@@ -2,13 +2,14 @@ package simplicial.software.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.core.text.HtmlCompat;
 
 import simplicial.software.Systems.R;
 
@@ -26,7 +27,8 @@ public class HelpActivity extends Activity implements OnClickListener {
         bClose.setOnClickListener(this);
 
         tvHelp = findViewById(R.id.tvHelp);
-        tvHelp.setText(Html.fromHtml(getString(R.string.help)));
+        tvHelp.setText(HtmlCompat.fromHtml(getString(R.string.help),
+                HtmlCompat.FROM_HTML_MODE_LEGACY));
         tvHelp.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
