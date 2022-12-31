@@ -10,8 +10,8 @@ android {
         applicationId "simplicial.software.Systems"
         minSdk 16
         targetSdk 33
-        versionCode 14
-        versionName "1.2.3"
+        versionCode 15
+        versionName "1.2.4"
     }
 
     buildTypes {
